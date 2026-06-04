@@ -1,6 +1,5 @@
 package com.mtsolutions.domain.controller;
 
-import com.mtsolutions.domain.dto.CreatePokemonRequest;
 import com.mtsolutions.domain.entity.Pokemon;
 import com.mtsolutions.domain.service.PokemonService;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,7 +13,11 @@ public class PokemonController {
         this.pokemonService = pokemonService;
     }
 
-    public Pokemon createPokemon(CreatePokemonRequest request) {
-        return this.pokemonService.createPokemon(request);
+    public Pokemon createPokemon(String name) {
+        return this.pokemonService.createPokemon(name);
+    }
+
+    public Pokemon findPokemonByName(String name) {
+        return this.pokemonService.findPokemonByName(name);
     }
 }

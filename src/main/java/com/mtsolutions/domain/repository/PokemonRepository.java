@@ -1,5 +1,6 @@
 package com.mtsolutions.domain.repository;
 
+import com.mtsolutions.application.exception.PokemonNotFoundException;
 import com.mtsolutions.domain.entity.Pokemon;
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
@@ -14,7 +15,8 @@ public class PokemonRepository implements PanacheMongoRepositoryBase<Pokemon, St
     }
 
     public Pokemon findByName(String name) {
-        return find("name", name.toLowerCase())
-                .firstResult();
+        return (find("name", name.toLowerCase())
+                .firstResultOptional()
+                .orElseThrow(PokemonNotFoundException::new));
     }
 }

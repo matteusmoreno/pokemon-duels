@@ -1,6 +1,8 @@
 package com.mtsolutions.application.client;
 
+import com.mtsolutions.application.client.exception.PokeApiExceptionMapper;
 import com.mtsolutions.application.dto.PokeApiMoveResponse;
+import org.eclipse.microprofile.rest.client.annotation.RegisterProvider;
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
@@ -12,6 +14,7 @@ import com.mtsolutions.application.dto.PokeApiPokemonResponse;
 
 @Path("/")
 @RegisterRestClient(configKey = "pokeapi")
+@RegisterProvider(PokeApiExceptionMapper.class)
 public interface PokeApiClient {
 
 	@GET

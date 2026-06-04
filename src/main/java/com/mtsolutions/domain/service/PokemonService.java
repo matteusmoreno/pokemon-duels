@@ -2,7 +2,6 @@ package com.mtsolutions.domain.service;
 
 import com.mtsolutions.application.client.PokeApiClient;
 import com.mtsolutions.application.dto.*;
-import com.mtsolutions.domain.dto.CreatePokemonRequest;
 import com.mtsolutions.domain.entity.Pokemon;
 import com.mtsolutions.domain.model.PokemonMove;
 import com.mtsolutions.domain.model.PokemonStat;
@@ -29,20 +28,20 @@ public class PokemonService {
         this.pokeApiClient = pokeApiClient;
     }
 
-    public Pokemon createPokemon(CreatePokemonRequest request) {
-        log.info("Creating Pokemon with name '{}'", request.name());
+    public Pokemon createPokemon(String name) {
+        log.info("Creating Pokemon with name '{}'", name);
 
-        if (this.pokemonRepository.existsByName(request.name())) {
-            log.warn("Pokemon with name '{}' already exists. Returning existing Pokemon.", request.name());
-            return this.pokemonRepository.findByName(request.name());
+        if (this.pokemonRepository.existsByName(name)) {
+            log.warn("Pokemon with name '{}' already exists. Returning existing Pokemon.", name);
+            return this.pokemonRepository.findByName(name);
         }
 
-        PokeApiPokemonResponse apiResponse = this.pokeApiClient.getPokemonByName(request.name());
+        PokeApiPokemonResponse apiResponse = this.pokeApiClient.getPokemonByName(name);
         List<PokemonMove> pokemonMoves = this.fetchPokemonMoves(apiResponse.moves());
 
         Pokemon pokemon = Pokemon.builder()
                 .pokemonId(apiResponse.id())
-                .name(request.name())
+                .name(name)
                 .profileImageUrl(apiResponse.sprites().other().officialArtwork().frontDefault())
                 .pokemonGifs(new PokemonGifs(apiResponse.sprites()))
                 .types(this.fetchPokemonTypes(apiResponse.types()))
@@ -51,8 +50,12 @@ public class PokemonService {
                 .build();
 
         this.pokemonRepository.persist(pokemon);
-        log.info("Pokemon with name '{}' has been created.", request.name());
+        log.info("Pokemon with name '{}' has been created.", name);
         return pokemon;
+    }
+
+    public Pokemon findPokemonByName(String name) {
+        return this.pokemonRepository.findByName(name);
     }
 
 

@@ -1,6 +1,8 @@
 package com.mtsolutions.domain.controller;
 
+import com.mtsolutions.domain.dto.ShortPokemonResponseDto;
 import com.mtsolutions.domain.entity.Pokemon;
+import com.mtsolutions.domain.model.PagedResponse;
 import com.mtsolutions.domain.service.PokemonService;
 import jakarta.enterprise.context.ApplicationScoped;
 
@@ -19,5 +21,9 @@ public class PokemonController {
 
     public Pokemon findPokemonByName(String name) {
         return this.pokemonService.findPokemonByName(name);
+    }
+
+    public PagedResponse<ShortPokemonResponseDto> findAllPokemons(int page, int size) {
+        return this.pokemonService.findAllPokemons(page, size);
     }
 }

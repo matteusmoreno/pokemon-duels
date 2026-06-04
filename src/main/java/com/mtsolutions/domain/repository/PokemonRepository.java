@@ -5,6 +5,8 @@ import com.mtsolutions.domain.entity.Pokemon;
 import io.quarkus.mongodb.panache.PanacheMongoRepositoryBase;
 import jakarta.enterprise.context.ApplicationScoped;
 
+import java.util.List;
+
 @ApplicationScoped
 public class PokemonRepository implements PanacheMongoRepositoryBase<Pokemon, String> {
 
@@ -18,5 +20,12 @@ public class PokemonRepository implements PanacheMongoRepositoryBase<Pokemon, St
         return (find("name", name.toLowerCase())
                 .firstResultOptional()
                 .orElseThrow(PokemonNotFoundException::new));
+    }
+
+    public List<Pokemon> findAllSortedByPokemonId(int page, int size) {
+        return findAll().page(page, size).list()
+                .stream()
+                .sorted((p1, p2) -> p1.getPokemonId().compareTo(p2.getPokemonId()))
+                .toList();
     }
 }

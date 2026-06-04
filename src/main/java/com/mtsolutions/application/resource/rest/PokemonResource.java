@@ -1,11 +1,10 @@
 package com.mtsolutions.application.resource.rest;
 
 import com.mtsolutions.domain.controller.PokemonController;
+import com.mtsolutions.domain.dto.ShortPokemonResponseDto;
 import com.mtsolutions.domain.entity.Pokemon;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
+import com.mtsolutions.domain.model.PagedResponse;
+import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Response;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
@@ -33,5 +32,17 @@ public class PokemonResource {
         Pokemon pokemon = this.pokemonController.findPokemonByName(name);
 
         return Response.status(Response.Status.OK).entity(pokemon).build();
+    }
+
+    @GET
+    @Path("/all")
+    public Response findAll(
+            @QueryParam("page") @DefaultValue("0") int page,
+            @QueryParam("size") @DefaultValue("10") int size
+    ) {
+        PagedResponse<ShortPokemonResponseDto> response = this.pokemonController.findAllPokemons(page, size);
+
+        return Response.status(Response.Status.OK).entity(response).build();
+
     }
 }

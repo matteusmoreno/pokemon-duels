@@ -2,11 +2,9 @@ package com.mtsolutions.domain.service;
 
 import com.mtsolutions.application.client.PokeApiClient;
 import com.mtsolutions.application.client.dto.*;
+import com.mtsolutions.domain.dto.ShortPokemonResponseDto;
 import com.mtsolutions.domain.entity.Pokemon;
-import com.mtsolutions.domain.model.PokemonMove;
-import com.mtsolutions.domain.model.PokemonStat;
-import com.mtsolutions.domain.model.PokemonType;
-import com.mtsolutions.domain.model.PokemonGifs;
+import com.mtsolutions.domain.model.*;
 import com.mtsolutions.domain.repository.PokemonRepository;
 import jakarta.enterprise.context.ApplicationScoped;
 import lombok.extern.slf4j.Slf4j;
@@ -56,6 +54,16 @@ public class PokemonService {
 
     public Pokemon findPokemonByName(String name) {
         return this.pokemonRepository.findByName(name);
+    }
+
+    public PagedResponse<ShortPokemonResponseDto> findAllPokemons(int page, int size) {
+        long total  = this.pokemonRepository.count();
+        List<ShortPokemonResponseDto> content = this.pokemonRepository.findAllSortedByPokemonId(page, size)
+                .stream()
+                .map(ShortPokemonResponseDto::new)
+                .toList();
+
+        return PagedResponse.of(content, page, size, total);
     }
 
 

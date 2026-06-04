@@ -1,7 +1,7 @@
 package com.mtsolutions.domain.service;
 
 import com.mtsolutions.application.client.PokeApiClient;
-import com.mtsolutions.application.dto.*;
+import com.mtsolutions.application.client.dto.*;
 import com.mtsolutions.domain.entity.Pokemon;
 import com.mtsolutions.domain.model.PokemonMove;
 import com.mtsolutions.domain.model.PokemonStat;

@@ -1,6 +1,6 @@
 package com.mtsolutions.domain.model;
 
-import com.mtsolutions.application.dto.PokeApiSpritesResponseDto;
+import com.mtsolutions.application.client.dto.PokeApiSpritesResponseDto;
 import lombok.*;
 
 @AllArgsConstructor

@@ -119,6 +119,7 @@ public class PokemonService {
                 .map(moveDto -> {
                     PokeApiMoveResponse moveDetails = this.pokeApiClient.getMove(moveDto.move().name());
                     return PokemonMove.builder()
+                            .id(moveDetails.id())
                             .name(moveDto.move().name())
                             .power(moveDetails.power())
                             .accuracy(moveDetails.accuracy())

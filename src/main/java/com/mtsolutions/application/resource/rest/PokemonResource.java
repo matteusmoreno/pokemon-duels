@@ -1,5 +1,6 @@
 package com.mtsolutions.application.resource.rest;
 
+import com.mtsolutions.application.common.RequestParam;
 import com.mtsolutions.domain.controller.PokemonController;
 import com.mtsolutions.domain.dto.ShortPokemonResponseDto;
 import com.mtsolutions.domain.entity.Pokemon;
@@ -20,15 +21,23 @@ public class PokemonResource {
 
     @POST
     @Path("/{name}")
-    public Response create(@PathParam("name") String name) {
+    public Response create(@PathParam(RequestParam.NAME) String name) {
         Pokemon pokemon = this.pokemonController.createPokemon(name.toLowerCase());
 
         return Response.status(Response.Status.CREATED).entity(pokemon).build();
     }
 
     @GET
+    @Path("/{pokemonId}")
+    public Response findByPokemonId(@PathParam(RequestParam.POKEMON_ID) Integer pokemonId) {
+        Pokemon pokemon = this.pokemonController.findByPokemonId(pokemonId);
+
+        return Response.status(Response.Status.OK).entity(pokemon).build();
+    }
+
+    @GET
     @Path("/{name}")
-    public Response findByName(@PathParam("name") String name) {
+    public Response findByName(@PathParam(RequestParam.NAME) String name) {
         Pokemon pokemon = this.pokemonController.findPokemonByName(name);
 
         return Response.status(Response.Status.OK).entity(pokemon).build();
@@ -37,8 +46,8 @@ public class PokemonResource {
     @GET
     @Path("/all")
     public Response findAll(
-            @QueryParam("page") @DefaultValue("0") int page,
-            @QueryParam("size") @DefaultValue("10") int size
+            @QueryParam(RequestParam.PAGE) @DefaultValue("0") int page,
+            @QueryParam(RequestParam.SIZE) @DefaultValue("10") int size
     ) {
         PagedResponse<ShortPokemonResponseDto> response = this.pokemonController.findAllPokemons(page, size);
 

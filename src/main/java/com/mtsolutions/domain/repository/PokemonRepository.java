@@ -10,6 +10,12 @@ import java.util.List;
 @ApplicationScoped
 public class PokemonRepository implements PanacheMongoRepositoryBase<Pokemon, String> {
 
+    public Pokemon findByPokemonId(Integer pokemonId) {
+        return find("pokemonId", pokemonId)
+                .firstResultOptional()
+                .orElseThrow(PokemonNotFoundException::new);
+    }
+
     public Boolean existsByName(String name) {
         return find("name", name.toLowerCase())
                 .firstResultOptional()

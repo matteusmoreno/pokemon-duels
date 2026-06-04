@@ -29,7 +29,7 @@ public class PokemonService {
     public Pokemon createPokemon(String name) {
         log.info("Creating Pokemon with name '{}'", name);
 
-        if (this.pokemonRepository.existsByName(name)) {
+        if (Boolean.TRUE.equals(this.pokemonRepository.existsByName(name))) {
             log.warn("Pokemon with name '{}' already exists. Returning existing Pokemon.", name);
             return this.pokemonRepository.findByName(name);
         }
@@ -50,6 +50,10 @@ public class PokemonService {
         this.pokemonRepository.persist(pokemon);
         log.info("Pokemon with name '{}' has been created.", name);
         return pokemon;
+    }
+
+    public Pokemon findPokemonByPokemonId(Integer pokemonId) {
+        return this.pokemonRepository.findByPokemonId(pokemonId);
     }
 
     public Pokemon findPokemonByName(String name) {
@@ -100,7 +104,7 @@ public class PokemonService {
                 case "special-attack" -> specialAttack = base;
                 case "special-defense" -> specialDefense = base;
                 case "speed" -> speed = base;
-                default -> {}
+                default -> log.warn("Unknown stat '{}' with value '{}' for Pokemon. Skipping.", statName, base);
             }
         }
 

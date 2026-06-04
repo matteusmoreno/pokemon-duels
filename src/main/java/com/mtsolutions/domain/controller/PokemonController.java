@@ -19,6 +19,10 @@ public class PokemonController {
         return this.pokemonService.createPokemon(name);
     }
 
+    public Pokemon findByPokemonId(Integer pokemonId) {
+        return this.pokemonService.findPokemonByPokemonId(pokemonId);
+    }
+
     public Pokemon findPokemonByName(String name) {
         return this.pokemonService.findPokemonByName(name);
     }

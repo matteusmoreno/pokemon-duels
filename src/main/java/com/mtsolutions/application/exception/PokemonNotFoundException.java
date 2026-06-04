@@ -9,6 +9,10 @@ public class PokemonNotFoundException extends PokemonDuelsException {
     private static final Integer STATUS_CODE = 404;
     private static final String DEFAULT_MESSAGE = Errors.POKEMON_NOT_FOUND_EXCEPTION.getDisplayName();
 
+    public PokemonNotFoundException(String message, Integer httpStatus, Errors errorCode, Origin origin, String externalMessage) {
+        super(message, httpStatus, errorCode, origin, externalMessage);
+    }
+
     public PokemonNotFoundException() {
         super(DEFAULT_MESSAGE, STATUS_CODE, ERROR_CODE, Origin.POKEMON_DUELS);
     }

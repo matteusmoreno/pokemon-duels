@@ -31,10 +31,10 @@ public class PokemonDuelsException extends RuntimeException {
         this.externalResponse = null;
     }
 
-    protected PokemonDuelsException(String message, Integer httpStatus, Origin origin, String externalResponse) {
+    protected PokemonDuelsException(String message, Integer httpStatus, Errors errorCode, Origin origin, String externalResponse) {
         super(message);
         this.httpStatus = httpStatus;
-        this.errorCode = null;
+        this.errorCode = errorCode;
         this.origin = origin;
         this.externalResponse = externalResponse;
     }

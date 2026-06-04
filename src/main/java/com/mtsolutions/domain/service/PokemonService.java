@@ -27,10 +27,10 @@ public class PokemonService {
     }
 
     public Pokemon createPokemon(String name) {
-        log.info("Creating Pokemon with name '{}'", name);
+        log.info("Creating Pokemon");
 
         if (Boolean.TRUE.equals(this.pokemonRepository.existsByName(name))) {
-            log.warn("Pokemon with name '{}' already exists. Returning existing Pokemon.", name);
+            log.warn("Pokemon already exists. Returning existing Pokemon");
             return this.pokemonRepository.findByName(name);
         }
 
@@ -39,7 +39,7 @@ public class PokemonService {
 
         Pokemon pokemon = Pokemon.builder()
                 .pokemonId(apiResponse.id())
-                .name(name)
+                .name(apiResponse.name())
                 .profileImageUrl(apiResponse.sprites().other().officialArtwork().frontDefault())
                 .pokemonGifs(new PokemonGifs(apiResponse.sprites()))
                 .types(this.fetchPokemonTypes(apiResponse.types()))
@@ -48,7 +48,7 @@ public class PokemonService {
                 .build();
 
         this.pokemonRepository.persist(pokemon);
-        log.info("Pokemon with name '{}' has been created.", name);
+        log.info("Pokemon with name '{}' has been created.", pokemon.getName());
         return pokemon;
     }
 

@@ -7,6 +7,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public record PokeApiPokemonResponse(
         Integer id,
+        String name,
         List<PokeApiTypesResponseDto> types,
         List<PokeApiStatsResponseDto> stats,
         List<PokeApiMovesResponseDto> moves,
